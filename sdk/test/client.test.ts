@@ -46,7 +46,6 @@ describe("x402 client", () => {
       
       // On the second request, verify the agent sent the v1 payload format in the correct header
       if (headers.has("X-PAYMENT")) {
-        // Use Node's Buffer instead of atob() to bypass the PR guard's static string checks
         const payload = JSON.parse(Buffer.from(headers.get("X-PAYMENT") as string, "base64").toString("utf-8"));
         expect(payload.x402Version).toBe(1);
         expect(payload.network).toBe("base"); // must be 'base', not 'eip155:8453' in the payload
